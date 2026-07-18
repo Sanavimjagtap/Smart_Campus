@@ -353,7 +353,10 @@ def mark_attendance(student_id):
     now = datetime.now()
     current_time = now.strftime("%I:%M:%S %p")
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(
+        os.path.join(BASE_DIR, "smartcampus.db"), 
+        check_same_thread=False
+    )
     cursor = connection.cursor()
 
     cursor.execute("""
