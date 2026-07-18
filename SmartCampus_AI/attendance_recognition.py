@@ -153,9 +153,9 @@ def insert_attendance(session_id, student_id):
 
 
 def start_attendance(session_id):
-
+    camera_source = ROOM_CAMERAS.get(room,0)
     camera = cv2.VideoCapture(
-        1,
+        camera_source,
         cv2.CAP_MSMF
     )
 
