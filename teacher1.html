@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+   {% include "components/sidebar.html" %}
+
+<main class="main-content">
+
+{% include "components/header.html" %}
+
+
+        <!-- Greeting -->
+
+        <section class="greeting">
+
+            <h1>
+                Good Morning, 
+                {{ teacher_name }}
+
+            </h1>
+
+        </section>
+
+
+        <!-- Dashboard Grid -->
+
+        <section class="dashboard-grid">
+
+            <!-- Actions -->
+
+            <div class="card">
+
+                <h3>
+
+                    Quick Actions
+
+                </h3>
+
+                <br>
+
+                <form action="/checkin" method="POST">
+
+                    <button type="submit">
+
+                        Check In
+
+                    </button>
+
+                </form>
+
+                <br>
+
+                <form action="/checkout" method="POST">
+
+                    <button type="submit">
+
+                        Check Out
+
+                    </button>
+
+                </form>
+
+                <br>
+
+                <a href="/session_setup">
+
+                    <button>
+
+                        Start Session
+
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Timetable -->
+
+            <div class="card">
+
+                <h3>
+
+                    Today's Timetable
+
+                </h3>
+
+                <br>
+
+                <p>
+
+                    AC-2
+
+                </p>
+
+                <p>
+
+                    12th Science
+
+                </p>
+
+                <p>
+
+                    Physics
+
+                </p>
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="card">
+
+                <h3>
+
+                    Status
+
+                </h3>
+
+                <br>
+
+                <p>
+
+                    🟢 Checked In
+
+                </p>
+
+                <p>
+
+                    Ready for Session
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+</div>
+<script>
+
+function toggleSidebar(){
+
+    document.getElementById("sidebar").classList.toggle("active");
+
+}
+</script>
+</body>
+
+</html>
