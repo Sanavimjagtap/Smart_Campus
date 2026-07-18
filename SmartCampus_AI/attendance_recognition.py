@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 ROOM_CAMERAS = {
 
-    "AC-1":"100.89.25.29/video",
+    "AC-1":"http://100.89.25.29:4747/video",
     "AC-2": 1,
     "AC-3": 1,
     "AC-4": 1,
