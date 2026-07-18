@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Classroom Occupancy</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+{% include "components/sidebar.html" %}
+
+<main class="main-content">
+
+{% include "components/header.html" %}
+
+<section class="occupancy-page fade">
+
+    <div class="occupancy-title">
+
+        <h1>Classroom Occupancy</h1>
+
+        <p>
+            Live status of every classroom
+        </p>
+
+    </div>
+
+    <div class="legend">
+
+        <div class="legend-item">
+
+            <div class="legend-color available"></div>
+
+            Available
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-color occupied"></div>
+
+            Occupied
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-color session"></div>
+
+            Session Running
+
+        </div>
+
+    </div>
+
+    <div class="occupancy-grid">
+
+        {% for room in classrooms %}
+
+<div
+id="{{ room.room }}"
+class="room-card {{ room.occupancy }}"
+
+data-room="{{ room.room }}"
+data-temp="{{ room.temperature }}"
+data-air="{{ room.air }}"
+data-lights="{{ room.lights }}"
+data-window="{{ room.window }}"
+data-door="{{ room.door }}"
+data-fire="{{ room.fire }}">
+
+    <h2>{{ room.room }}</h2>
+
+    <p class="room-status">
+
+        {% if room.occupancy=="available" %}
+            Available
+
+        {% elif room.occupancy=="occupied" %}
+            Occupied
+
+        {% else %}
+            Session Running
+
+        {% endif %}
+
+    </p>
+
+</div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+<div id="roomPreview" class="room-preview">
+
+    <h2 id="previewRoom">AC-1</h2>
+
+    <div class="preview-item">
+        🌡 <span id="previewTemp">0°C</span>
+    </div>
+
+    <div class="preview-item">
+        💨 <span id="previewAir">0</span>
+    </div>
+
+    <div class="preview-item">
+        💡 <span id="previewLights">OFF</span>
+    </div>
+
+    <div class="preview-item">
+        🪟 <span id="previewWindow">Closed</span>
+    </div>
+
+    <div class="preview-item">
+        🚪 <span id="previewDoor">Locked</span>
+    </div>
+
+    <div class="preview-item">
+        🔥 <span id="previewFire">SAFE</span>
+    </div>
+
+</div>
+</main>
+<script>
+async function updateOccupancy(){
+
+    const response = await fetch("/occupancy_status");
+
+    const data = await response.json();
+
+
+    for(const room in data){
+
+        const card = document.getElementById(room);
+
+        if(!card) continue;
+
+
+        const roomData = data[room];
+
+
+        // Update card colour
+        card.classList.remove(
+            "available",
+            "occupied",
+            "session"
+        );
+
+        card.classList.add(roomData.occupancy);
+
+
+
+        // Update status text
+        const status = card.querySelector(".room-status");
+
+
+        if(roomData.occupancy === "available")
+            status.innerHTML = "Available";
+
+        else if(roomData.occupancy === "occupied")
+            status.innerHTML = "Occupied";
+
+        else
+            status.innerHTML = "Session Running";
+
+
+
+        // Update live sensor values
+        card.dataset.temp = roomData.temperature;
+
+        card.dataset.air = roomData.air;
+
+        card.dataset.lights = roomData.lights;
+
+        card.dataset.window = roomData.window;
+
+        card.dataset.door = roomData.door;
+
+        card.dataset.fire = roomData.fire;
+
+    }
+
+}
+
+setInterval(updateOccupancy,1000);
+
+updateOccupancy();
+
+</script>
+<script>
+const cards = document.querySelectorAll(".room-card");
+const preview = document.getElementById("roomPreview");
+
+let currentCard = null;
+
+
+function updatePreview(card)
+{
+    if(!card) return;
+
+
+    document.getElementById("previewRoom").textContent =
+        card.dataset.room;
+
+
+    document.getElementById("previewTemp").textContent =
+        card.dataset.temp + "°C";
+
+
+    document.getElementById("previewAir").textContent =
+        card.dataset.air;
+
+
+    document.getElementById("previewLights").textContent =
+        card.dataset.lights;
+
+
+    document.getElementById("previewWindow").textContent =
+        card.dataset.window;
+
+
+    document.getElementById("previewDoor").textContent =
+        card.dataset.door;
+
+
+    document.getElementById("previewFire").textContent =
+        card.dataset.fire;
+}
+
+
+
+cards.forEach(card=>{
+
+    card.addEventListener("mouseenter",()=>{
+
+        currentCard = card;
+
+        updatePreview(card);
+
+        preview.classList.add("show");
+
+    });
+
+
+    card.addEventListener("mouseleave",()=>{
+
+        currentCard = null;
+
+        preview.classList.remove("show");
+
+    });
+
+});
+
+
+// refresh hover preview live
+setInterval(()=>{
+
+    if(currentCard)
+    {
+        updatePreview(currentCard);
+    }
+
+},1000);
+</script>
+</body>
+
+</html>

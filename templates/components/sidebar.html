@@ -1,0 +1,102 @@
+<div class="menu-btn" onclick="toggleSidebar()">
+    ☰
+</div>
+
+<aside class="sidebar" id="sidebar">
+
+    <br><br><br>
+
+    <div class="sidebar-logo">
+        Smart Campus
+    </div>
+
+    <nav>
+
+        <a href="/teacher"
+        class="{% if active_page=='dashboard' %}active{% endif %}">
+
+            <span class="material-icons">dashboard</span>
+
+            Dashboard
+
+        </a>
+
+        <a href="/session_setup"
+        class="{% if active_page=='session' %}active{% endif %}">
+
+            <span class="material-icons">play_circle</span>
+
+            Session
+
+        </a>
+
+        <a href="/register_face"
+        class="{% if active_page=='face' %}active{% endif %}">
+
+            <span class="material-icons">face</span>
+
+            Face Registration
+
+        </a>
+
+        <a href="/occupancy"
+        class="{% if active_page=='occupancy' %}active{% endif %}">
+
+            <span class="material-icons">meeting_room</span>
+
+            Classroom Occupancy
+
+        </a>
+        
+        
+        <a href="/attendance_reports"
+        class="{% if active_page=='attendance' %}active{% endif %}">
+
+            <span class="material-icons">fact_check</span>
+
+            Attendance Reports
+
+        </a>
+
+        <a href="/chatbot"
+        class="{% if active_page=='chatbot' %}active{% endif %}">
+
+            <span class="material-icons">smart_toy</span>
+
+            Chatbot
+
+        </a>
+
+        <a href="#"
+        class="{% if active_page=='analytics' %}active{% endif %}">
+
+            <span class="material-icons">analytics</span>
+
+            Analytics
+
+        </a>
+
+        <a href="#"
+        class="{% if active_page=='settings' %}active{% endif %}">
+
+            <span class="material-icons">settings</span>
+
+            Settings
+
+        </a>
+
+    </nav>
+
+</aside>
+
+<script>
+
+function toggleSidebar(){
+
+    document
+    .getElementById("sidebar")
+    .classList.toggle("active");
+
+}
+
+</script>

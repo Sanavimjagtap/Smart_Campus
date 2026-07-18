@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Session</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+    {% include "components/sidebar.html" %}
+
+<main class="main-content">
+
+{% include "components/header.html" %}
+
+<div class="teacher-page fade">
+
+   
+
+    <div class="session-wrapper">
+
+        <!-- LEFT CARD -->
+
+        <div class="session-card">
+
+            <h2>Start Session</h2>
+
+            <form action="/session" method="POST">
+
+                <label>Class</label>
+
+                <select name="std">
+
+                    <option>11th</option>
+
+                    <option selected>12th</option>
+
+                </select>
+
+                <label>Division</label>
+
+                <select name="div">
+
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>E</option>
+
+                </select>
+
+                <label>Duration</label>
+
+                <select name="time">
+
+                    <option value="45">45 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    <option value="90">90 Minutes</option>
+
+                </select>
+
+                <button type="submit">
+
+                    Start Session
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+
+
+        <!-- RIGHT CARD -->
+
+        <div class="session-card">
+
+            <h2>Session Details</h2>
+
+            <div class="detail">
+
+                <span>Class</span>
+
+                <strong>{{ standard }}</strong>
+
+            </div>
+
+            <div class="detail">
+
+                <span>Division</span>
+
+                <strong>{{ division }}</strong>
+
+            </div>
+            <div class="detail">
+
+                <span>Classroom</span>
+
+                <strong>{{ room }}</strong>
+
+            </div>
+            
+            <div class="detail">
+
+                <span>Duration</span>
+
+                <strong>{{ duration }} Minutes</strong>
+
+            </div>
+
+            <div class="detail">
+
+                <span>Date</span>
+
+                <strong>{{ date }}</strong>
+
+            </div>
+
+            <div class="detail">
+
+                <span>Started</span>
+
+                <strong>{{ time }}</strong>
+
+            </div>
+
+            <div class="detail">
+
+                <span>Students Present</span>
+
+                <strong id="presentCount">0</strong>
+
+            </div>
+
+            <hr>
+
+            <h3>Time Remaining</h3>
+
+            <div id="timer" class="timer"></div>
+
+            <form
+            id="endSessionForm"
+            action="/end_session"
+            method="POST">
+
+                <input
+                type="hidden"
+                name="session_id"
+                value="{{ session_id }}">
+
+                <button
+                class="end-btn">
+
+                    End Session
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let timeLeft={{seconds}};
+
+let timer=setInterval(function(){
+
+let min=Math.floor(timeLeft/60);
+
+let sec=timeLeft%60;
+
+document.getElementById("timer").innerHTML=
+min+":"+String(sec).padStart(2,"0");
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+document.getElementById("timer").innerHTML="Session Ended";
+
+document.getElementById("endSessionForm").submit();
+
+}
+
+timeLeft--;
+
+},1000);
+
+</script>
+<script>
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("active");
+
+}
+
+</script>
+
+<script>
+
+function updatePresentCount(){
+
+    fetch("/present_count/{{ session_id }}")
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("presentCount").innerHTML = data.count;
+
+    });
+
+}
+
+updatePresentCount();
+
+setInterval(updatePresentCount,1000);
+
+</script>
+</body>
+
+</html>

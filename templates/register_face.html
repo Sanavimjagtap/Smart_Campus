@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Face Registration</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+{% include "components/sidebar.html" %}
+
+<main class="main-content">
+
+{% include "components/header.html" %}
+
+<div class="page">
+
+<div class="session-card">
+
+<h2>Face Registration</h2>
+
+<div class="line"></div>
+
+<p style="margin-bottom:25px;">
+Select a student to capture and register facial data.
+</p>
+
+<form action="/capture_face" method="POST">
+
+<div class="session-row">
+
+<label>Student</label>
+
+<select name="student_id">
+
+{% for student in students %}
+
+<option value="{{ student[0] }}">
+
+{{ student[0] }} — {{ student[1] }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button class="start-btn">
+
+Capture Face
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+function toggleSidebar(){
+
+document.getElementById("sidebar").classList.toggle("active");
+
+}
+
+</script>
+
+</body>
+</html>
