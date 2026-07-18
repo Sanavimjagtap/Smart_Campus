@@ -3,7 +3,29 @@ import pickle
 import sqlite3
 import os
 from datetime import datetime
+ROOM_CAMERAS = {
 
+    "AC-1":"100.89.25.29/video",
+    "AC-2": 1,
+    "AC-3": 1,
+    "AC-4": 1,
+    "AC-5": 1,
+    "AC-6": 1,
+
+    "AC-7": 1,
+    "AC-8": 1,
+    "AC-9": 1,
+    "AC-10": 1,
+    "AC-11": 1,
+    "AC-12": 1,
+
+    "CS Lab 1": 12,
+    "CS Lab 2": 13,
+
+    "Electronics Lab 1": 14,
+    "Electronics Lab 2": 15
+
+}
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASE = os.path.join(BASE_DIR, "smartcampus.db")
