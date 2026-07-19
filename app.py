@@ -217,11 +217,11 @@ def session_page():
     session["session_id"] = session_id
     connection.commit()
     connection.close()
-    threading.Thread(
-	    target=start_attendance,
-	    args=(session_id, room),
-	    daemon=True
-	).start()
+    #threading.Thread(
+	    #target=start_attendance,
+		#args=(session_id, room),
+	    #daemon=True
+	#).start()
     
     return render_template(
         "session.html",
