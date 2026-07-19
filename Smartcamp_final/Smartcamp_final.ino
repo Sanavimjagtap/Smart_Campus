@@ -1,6 +1,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
-
+#include <WiFiClientSecure.h>
 #include <DHT.h>
 
 #include <ESP32Servo.h>
@@ -12,8 +12,8 @@ String occupancyStatus = "available";
 const char* ssid = "Galaxy A14 5G";
 const char* password = "sanavi0110";
 
-const char* server =
-"http://10.172.59.89:5000/update_classroom";
+const char* serverName =
+"https://smart-campus-tn0o.onrender.com/update_occupancy";
 
 // -------------------- PINS --------------------
 
@@ -285,26 +285,29 @@ void handleFire()
 
 void sendStatus()
 {
-    if(WiFi.status()==WL_CONNECTED)
+    if (WiFi.status() == WL_CONNECTED)
     {
+        WiFiClientSecure client;
+
+        client.setInsecure();
+
         HTTPClient http;
 
-        http.begin(server);
+        http.begin(client, serverName);
 
         http.addHeader(
             "Content-Type",
             "application/json"
         );
 
-
         String json = "{";
-        
+
         json += "\"room\":\"AC-1\",";
         json += "\"occupancy\":\"" + occupancyStatus + "\",";
         json += "\"lights\":\"" + lightsStatus + "\",";
         json += "\"temperature\":" + String(temperature) + ",";
         json += "\"air\":" + String(airValue) + ",";
-        
+
         json += "\"window\":\"";
         json += (windowOpen ? "Open" : "Closed");
         json += "\",";
@@ -319,16 +322,12 @@ void sendStatus()
 
         json += "}";
 
-
-        Serial.println("JSON:");
         Serial.println(json);
-
 
         int response = http.POST(json);
 
         Serial.print("HTTP Code: ");
         Serial.println(response);
-
 
         http.end();
     }
