@@ -162,6 +162,10 @@ def attendance_exists(session_id, student_id):
 
 def insert_attendance(session_id, student_id):
 
+    print("DATABASE =", DATABASE)
+    print("SESSION =", session_id)
+    print("STUDENT =", student_id)
+
     connection = sqlite3.connect(DATABASE)
 
     cursor = connection.cursor()
@@ -185,8 +189,9 @@ def insert_attendance(session_id, student_id):
 
     connection.commit()
 
-    connection.close()
+    print("Attendance committed!")
 
+    connection.close()
 
 def start_attendance(session_id, room):
     camera_source = ROOM_CAMERAS[room]["source"]
