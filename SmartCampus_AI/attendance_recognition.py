@@ -163,11 +163,8 @@ def insert_attendance(session_id, student_id):
 
 
 def start_attendance(session_id, room):
-    camera_source = ROOM_CAMERAS.get(room,0)
-    camera = cv2.VideoCapture(
-        camera_source,
-        cv2.CAP_MSMF
-    )
+    camera_source = ROOM_CAMERAS[room]["source"]
+    camera = cv2.VideoCapture(camera_source)
 
     cv2.namedWindow("Smart Campus Attendance")
 
