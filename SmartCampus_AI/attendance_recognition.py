@@ -3,39 +3,65 @@ import pickle
 import sqlite3
 import os
 from datetime import datetime
+
 ROOM_CAMERAS = {
 
-    "AC-1": {
+    "AC-1":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
 
-    "AC-2": {
+    "AC-2":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
 
-    "AC-3": {
+    "AC-3":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
     },
-        "AC-4": {
+
+    "AC-4":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
-        "AC-5": {
+
+        "AC-5":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
-        "AC-6": {
+
+        "AC-6":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
-        "AC-7": {
+
+        "AC-7":{
+
         "type":"ip",
-        "source":"http://100.89.25.29:4747/video"
+
+        "source":"http://10.172.59.40:8080/video"
+
     },
 }
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASE = os.path.join(BASE_DIR, "smartcampus.db")
