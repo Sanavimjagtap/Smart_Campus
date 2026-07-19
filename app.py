@@ -140,19 +140,56 @@ def login():
             return "Invalid Login ID"
 
     return render_template("Login.html")
-
-
+    
 
 @app.route("/teacher")
 def teacher():
 
+    now = datetime.now()
+    current_date = now.strftime("%d %B %Y")
+
+    connection = sqlite3.connect("smartcampus.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT CheckIn, CheckOut
+    FROM TeacherAttendance
+    WHERE TeacherID=? AND Date=?
+    """,
+    (
+        session["teacher_id"],
+        current_date
+    ))
+
+    attendance = cursor.fetchone()
+
+    connection.close()
+
+    checkin_status = False
+    checkout_status = False
+    checkin_time = None
+    checkout_time = None
+
+    if attendance:
+        checkin_time = attendance[0]
+        checkout_time = attendance[1]
+
+        if checkin_time:
+            checkin_status = True
+
+        if checkout_time:
+            checkout_status = True
+
+
     return render_template(
         "teacher1.html",
         teacher_name=session["teacher_name"],
-        active_page="dashboard"
+        active_page="dashboard",
+        checkin_status=checkin_status,
+        checkout_status=checkout_status,
+        checkin_time=checkin_time,
+        checkout_time=checkout_time
     )
-   
-
 
 @app.route("/student")
 def student():
