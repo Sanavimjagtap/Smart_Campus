@@ -1058,20 +1058,27 @@ Please ask about:
         "answer": answer
     })
 
-@app.route("/update_classroom", methods=["POST"])
-def update_classroom():
+@app.route("/update_occupancy", methods=["POST"])
+def update_occupancy():
 
-    data=request.json
+    data = request.json
 
     print("Received:", data)
 
     if not data or "room" not in data:
-        return "Invalid Data",400
+        return "Invalid Data", 400
 
+    room = data["room"]
 
-    room=data["room"]
+    if room in classrooms:
 
-    classrooms[room]=data
+        classrooms[room]["occupancy"] = data["occupancy"]
+        classrooms[room]["temperature"] = data["temperature"]
+        classrooms[room]["air"] = data["air"]
+        classrooms[room]["lights"] = data["lights"]
+        classrooms[room]["window"] = data["window"]
+        classrooms[room]["fire"] = data["fire"]
+        classrooms[room]["door"] = data["door"]
 
     return "Updated"
 
