@@ -384,48 +384,7 @@ def checkout():
 
     return redirect(url_for("teacher"))
 
-@app.route("/mark_attendance/<student_id>")
-def mark_attendance(student_id):
 
-    now = datetime.now()
-    current_time = now.strftime("%I:%M:%S %p")
-
-    connection = sqlite3.connect(
-        os.path.join(BASE_DIR, "smartcampus.db"), 
-        check_same_thread=False
-    )
-    cursor = connection.cursor()
-
-    cursor.execute("""
-    SELECT * FROM Attendance
-    WHERE SessionID=? AND StudentID=?
-    """,
-    (
-    session["session_id"],
-    student_id
-    ))
-
-    record = cursor.fetchone()
-
-    if record:
-        connection.close()
-        return "Already Marked"
-    
-    cursor.execute("""
-    INSERT INTO Attendance
-    (SessionID, StudentID, TimeMarked)
-    VALUES (?, ?, ?)
-    """,
-    (
-        session["session_id"],
-        student_id,
-        current_time
-    ))
-
-    connection.commit()
-    connection.close()
-
-    return "Attendance Marked!"
 
 @app.route("/register_face")
 def register_face():
