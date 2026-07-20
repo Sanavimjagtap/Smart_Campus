@@ -1165,6 +1165,28 @@ def mark_attendance():
         "status": "success"
     }
 
+@app.route("/attendance_exists")
+def attendance_exists():
+
+    session_id = request.args.get("session_id")
+    student_id = request.args.get("student_id")
+
+    connection = sqlite3.connect(DATABASE)
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT AttendanceID
+        FROM Attendance
+        WHERE SessionID=? AND StudentID=?
+    """, (session_id, student_id))
+
+    exists = cursor.fetchone() is not None
+
+    connection.close()
+
+    return {
+        "exists": exists
+    }
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
