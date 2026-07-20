@@ -1121,6 +1121,51 @@ def active_session():
             "session_id": None
         }
 
+@app.route("/mark_attendance", methods=["POST"])
+def mark_attendance():
+
+    data = request.get_json()
+
+    session_id = data["session_id"]
+    student_id = data["student_id"]
+    current_time = data["time"]
+
+    connection = sqlite3.connect(DATABASE)
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT AttendanceID
+        FROM Attendance
+        WHERE SessionID=? AND StudentID=?
+    """, (session_id, student_id))
+
+    if cursor.fetchone() is None:
+
+        cursor.execute("""
+            INSERT INTO Attendance
+            (
+                SessionID,
+                StudentID,
+                TimeMarked
+            )
+            VALUES (?, ?, ?)
+        """,
+        (
+            session_id,
+            student_id,
+            current_time
+        ))
+
+        connection.commit()
+
+    connection.close()
+
+    return {
+        "status": "success"
+    }
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
