@@ -1088,6 +1088,39 @@ def occupancy_status():
 
     return jsonify(classrooms)
 
+@app.route("/active_session")
+def active_session():
+
+    connection = sqlite3.connect(DATABASE)
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT SessionID, Room
+        FROM Sessions
+        WHERE EndTime=""
+        ORDER BY SessionID DESC
+        LIMIT 1
+    """)
+
+    row = cursor.fetchone()
+
+    connection.close()
+
+
+    if row:
+
+        return {
+            "session_id": row[0],
+            "room": row[1]
+        }
+
+    else:
+
+        return {
+            "session_id": None
+        }
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
