@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS Sessions(
     TeacherID TEXT,
     Class TEXT,
     Division TEXT,
+    Room TEXT,
     Date TEXT,
     StartTime TEXT,
     EndTime TEXT,
