@@ -21,6 +21,11 @@ from flask import jsonify
 app = Flask(__name__)
 app.secret_key = "smartcampus123"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATABASE = os.path.join(BASE_DIR, "smartcampus.db")
+
+
 classrooms = {
 
 "AC-1":{
@@ -101,7 +106,7 @@ def login():
         login_id = request.form["login_id"]
         password = request.form["password"]
 
-        connection = sqlite3.connect("smartcampus.db")
+        connection = sqlite3.connect(DATABASE)
         cursor = connection.cursor()
 
         cursor.execute(
@@ -148,7 +153,7 @@ def teacher():
     now = datetime.now()
     current_date = now.strftime("%d %B %Y")
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -220,7 +225,7 @@ def session_page():
     minutes=int(request.form["time"])
     seconds=minutes*60  #10
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -276,7 +281,7 @@ def session_page():
 @app.route("/present_count/<int:session_id>")
 def present_count(session_id):
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -299,7 +304,7 @@ def end_session():
     now = datetime.now()
 
     current_time = now.strftime("%I:%M:%S %p")
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
 
     cursor = connection.cursor()
     cursor.execute("""
@@ -367,7 +372,7 @@ def checkout():
     current_date = now.strftime("%d %B %Y")
     current_time = now.strftime("%I:%M:%S %p")
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
     cursor.execute("""
     UPDATE TeacherAttendance
@@ -389,7 +394,7 @@ def checkout():
 @app.route("/register_face")
 def register_face():
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -583,7 +588,7 @@ def capture_face():
 @app.route("/attendance")
 def attendance():
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     # Latest session
@@ -631,7 +636,7 @@ def attendance():
 @app.route("/attendance_report/<int:session_id>")
 def attendance_report(session_id):
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -677,7 +682,7 @@ def attendance_report(session_id):
 @app.route("/attendance_reports")
 def attendance_reports():
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -702,7 +707,7 @@ def attendance_reports():
 @app.route("/export_excel/<int:session_id>")
 def export_excel(session_id):
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     # Session details
@@ -792,7 +797,7 @@ def export_excel(session_id):
 @app.route("/export_pdf/<int:session_id>")
 def export_pdf(session_id):
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
     cursor.execute("""
