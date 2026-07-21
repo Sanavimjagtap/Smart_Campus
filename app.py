@@ -1,9 +1,4 @@
-import threading
-from SmartCampus_AI.head_direction import get_head_direction
-import time
-import cv2
 import os
-from SmartCampus_AI.attendance_recognition import start_attendance
 import re
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime
