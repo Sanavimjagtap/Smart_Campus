@@ -220,9 +220,9 @@ def session_page():
     current_time = now.strftime("%I:%M:%S %p")
 
     minutes=int(request.form["time"])
-    seconds=minutes*60  #10
+    seconds=minutes*60  
 
-    connection = get_connection()
+	connection = get_connection()
 	cursor = connection.cursor()
 	
 	cursor.execute("""
