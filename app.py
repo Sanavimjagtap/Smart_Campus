@@ -295,7 +295,7 @@ def present_count(session_id):
 
     return {
         "count": count
-    }}
+    }
 
 @app.route("/session_status")
 def session_status():
@@ -376,7 +376,7 @@ def end_session():
     connection.commit()
     connection.close()
 
-    return redirect(url_for("teacher")))
+    return redirect(url_for("teacher"))
 
 @app.route("/checkin", methods=["POST"])
 def checkin():
