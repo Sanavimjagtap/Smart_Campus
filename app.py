@@ -222,40 +222,42 @@ def session_page():
     minutes=int(request.form["time"])
     seconds=minutes*60  #10
 
-    connection = sqlite3.connect(DATABASE)
-    cursor = connection.cursor()
-
-    cursor.execute("""
-    INSERT INTO Sessions
-    (
-    TeacherID,
-    Class,
-    Division,
-    Room,
-    Date,
-    StartTime,
-    EndTime,
-    Duration
-    )
-
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    """,
-    (
-    session["teacher_id"],
-    standard,
-    division,
-    room,
-    current_date,
-    current_time,
-    "",
-    minutes
-    )
-    )
-    
-    session_id = cursor.lastrowid
-    session["session_id"] = session_id
-    connection.commit()
-    connection.close()
+    connection = get_connection()
+	cursor = connection.cursor()
+	
+	cursor.execute("""
+	INSERT INTO Sessions
+	(
+	TeacherID,
+	Class,
+	Division,
+	Room,
+	Date,
+	StartTime,
+	EndTime,
+	Duration
+	)
+	
+	VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+	RETURNING SessionID
+	""",
+	(
+	session["teacher_id"],
+	standard,
+	division,
+	room,
+	current_date,
+	current_time,
+	"",
+	minutes
+	))
+	
+	session_id = cursor.fetchone()[0]
+	
+	session["session_id"] = session_id
+	
+	connection.commit()
+	connection.close()
     #threading.Thread(
 	    #target=start_attendance,
 		#args=(session_id, room),
