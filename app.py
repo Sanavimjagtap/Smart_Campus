@@ -297,6 +297,62 @@ def present_count(session_id):
         "count": count
     }
 
+@app.route("/session_status")
+def session_status():
+
+    session_id = request.args.get("session_id")
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT EndTime
+        FROM Sessions
+        WHERE SessionID=%s
+    """,
+    (session_id,))
+
+    row = cursor.fetchone()
+
+    connection.close()
+
+    if row is None:
+        return {
+            "active": False
+        }
+
+    return {
+        "active": row[0] == ""
+    }
+
+@app.route("/student_name")
+def student_name():
+
+    student_id = request.args.get("student_id")
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT Name
+        FROM Students
+        WHERE StudentID=%s
+    """,
+    (student_id,))
+
+    row = cursor.fetchone()
+
+    connection.close()
+
+    if row:
+        return {
+            "name": row[0]
+        }
+
+    return {
+        "name":"Unknown"
+    }
+
 @app.route("/end_session", methods=["POST"])
 def end_session():
     session_id = request.form["session_id"]
