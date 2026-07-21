@@ -280,13 +280,13 @@ def session_page():
 @app.route("/present_count/<int:session_id>")
 def present_count(session_id):
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
-    SELECT COUNT(*)
-    FROM Attendance
-    WHERE SessionID = ?
+        SELECT COUNT(*)
+        FROM Attendance
+        WHERE SessionID=%s
     """, (session_id,))
 
     count = cursor.fetchone()[0]
@@ -295,7 +295,7 @@ def present_count(session_id):
 
     return {
         "count": count
-    }
+    }}
 
 @app.route("/session_status")
 def session_status():
@@ -355,23 +355,28 @@ def student_name():
 
 @app.route("/end_session", methods=["POST"])
 def end_session():
+
     session_id = request.form["session_id"]
-    now = datetime.now()
 
-    current_time = now.strftime("%I:%M:%S %p")
-    connection = sqlite3.connect(DATABASE)
+    current_time = datetime.now().strftime("%I:%M:%S %p")
 
+    connection = get_connection()
     cursor = connection.cursor()
+
     cursor.execute("""
-    UPDATE Sessions
-    SET EndTime = ?
-    WHERE SessionID = ?
+        UPDATE Sessions
+        SET EndTime=%s
+        WHERE SessionID=%s
     """,
-    (current_time, session_id)
-    )
+    (
+        current_time,
+        session_id
+    ))
+
     connection.commit()
     connection.close()
-    return redirect(url_for("teacher"))
+
+    return redirect(url_for("teacher")))
 
 @app.route("/checkin", methods=["POST"])
 def checkin():
@@ -643,7 +648,7 @@ def capture_face():
 @app.route("/attendance")
 def attendance():
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     # Latest session
@@ -672,7 +677,7 @@ def attendance():
 
     LEFT JOIN Attendance
     ON Students.StudentID = Attendance.StudentID
-    AND Attendance.SessionID = ?
+    AND Attendance.SessionID =%s
 
     ORDER BY Students.StudentID
     """,(session_id,))
@@ -691,13 +696,13 @@ def attendance():
 @app.route("/attendance_report/<int:session_id>")
 def attendance_report(session_id):
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
     SELECT Class, Division, Date, StartTime
     FROM Sessions
-    WHERE SessionID=?
+    WHERE SessionID=%s
     """,(session_id,))
 
     session_info = cursor.fetchone()
@@ -711,7 +716,7 @@ def attendance_report(session_id):
 
     LEFT JOIN Attendance
     ON Students.StudentID = Attendance.StudentID
-    AND Attendance.SessionID=?
+    AND Attendance.SessionID=%s
 
     ORDER BY Students.StudentID
     """,(session_id,))
@@ -737,7 +742,7 @@ def attendance_report(session_id):
 @app.route("/attendance_reports")
 def attendance_reports():
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -762,14 +767,14 @@ def attendance_reports():
 @app.route("/export_excel/<int:session_id>")
 def export_excel(session_id):
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     # Session details
     cursor.execute("""
     SELECT Class, Division, Date
     FROM Sessions
-    WHERE SessionID=?
+    WHERE SessionID=%s
     """, (session_id,))
 
     session_data = cursor.fetchone()
@@ -785,7 +790,7 @@ def export_excel(session_id):
 
     LEFT JOIN Attendance
     ON Students.StudentID = Attendance.StudentID
-    AND Attendance.SessionID = ?
+    AND Attendance.SessionID = %s
 
     ORDER BY Students.StudentID
     """, (session_id,))
@@ -852,13 +857,13 @@ def export_excel(session_id):
 @app.route("/export_pdf/<int:session_id>")
 def export_pdf(session_id):
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
     SELECT Class, Division, Date
     FROM Sessions
-    WHERE SessionID=?
+    WHERE SessionID=%s
     """,(session_id,))
 
     session_data = cursor.fetchone()
@@ -873,7 +878,7 @@ def export_pdf(session_id):
 
     LEFT JOIN Attendance
     ON Students.StudentID=Attendance.StudentID
-    AND Attendance.SessionID=?
+    AND Attendance.SessionID=%s
 
     ORDER BY Students.StudentID
     """,(session_id,))
@@ -1146,35 +1151,30 @@ def occupancy_status():
 @app.route("/active_session")
 def active_session():
 
-    connection = sqlite3.connect(DATABASE)
-
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
         SELECT SessionID, Room
         FROM Sessions
-        WHERE EndTime=""
+        WHERE EndTime=%s
         ORDER BY SessionID DESC
         LIMIT 1
-    """)
+    """, ("",))
 
     row = cursor.fetchone()
 
     connection.close()
 
-
     if row:
-
         return {
             "session_id": row[0],
             "room": row[1]
         }
 
-    else:
-
-        return {
-            "session_id": None
-        }
+    return {
+        "session_id": None
+    }
 
 @app.route("/mark_attendance", methods=["POST"])
 def mark_attendance():
