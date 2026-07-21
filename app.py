@@ -150,13 +150,13 @@ def teacher():
     now = datetime.now()
     current_date = now.strftime("%d %B %Y")
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
     SELECT CheckIn, CheckOut
     FROM TeacherAttendance
-    WHERE TeacherID=? AND Date=?
+    WHERE TeacherID=%s AND Date=%s
     """,
     (
         session["teacher_id"],
@@ -323,13 +323,13 @@ def checkin():
     current_date = now.strftime("%d %B %Y")
     current_time = now.strftime("%I:%M:%S %p")
 
-    connection = sqlite3.connect("smartcampus.db")
+    connection = get_connection()
     cursor = connection.cursor()
 
     # 👇 STEP 1: Check if teacher has already checked in today
     cursor.execute("""
     SELECT * FROM TeacherAttendance
-    WHERE TeacherID=? AND Date=?
+    WHERE TeacherID=%s AND Date=%s
     """,
     (
         session["teacher_id"],
@@ -347,7 +347,7 @@ def checkin():
     cursor.execute("""
     INSERT INTO TeacherAttendance
     (TeacherID, Date, CheckIn)
-    VALUES (?, ?, ?)
+    VALUES (%s, %s, %s)
     """,
     (
         session["teacher_id"],
@@ -369,12 +369,12 @@ def checkout():
     current_date = now.strftime("%d %B %Y")
     current_time = now.strftime("%I:%M:%S %p")
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
     cursor.execute("""
     UPDATE TeacherAttendance
-    SET CheckOut = ?
-    WHERE TeacherID = ? AND Date = ?
+    SET CheckOut = %s
+	WHERE TeacherID = %s AND Date = %s
     """,
     (
         current_time,
