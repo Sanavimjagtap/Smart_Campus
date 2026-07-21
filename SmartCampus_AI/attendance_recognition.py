@@ -1,9 +1,10 @@
 import cv2
 import pickle
-import sqlite3
 import os
+import requests
 from datetime import datetime
 
+RENDER_URL = "https://smart-campus-tn0o.onrender.com"
 ROOM_CAMERAS = {
 
     "AC-1":{
@@ -64,7 +65,6 @@ ROOM_CAMERAS = {
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATABASE = os.path.join(BASE_DIR, "smartcampus.db")
 
 TRAINER = os.path.join(
     BASE_DIR,
@@ -94,103 +94,93 @@ face_detector = cv2.CascadeClassifier(
 
 def session_active(session_id):
 
-    connection = sqlite3.connect(DATABASE)
+    try:
 
-    cursor = connection.cursor()
+        response = requests.get(
+            f"{RENDER_URL}/session_status",
+            params={
+                "session_id": session_id
+            }
+        )
 
-    cursor.execute("""
-    SELECT EndTime
-    FROM Sessions
-    WHERE SessionID=?
-    """, (session_id,))
+        data = response.json()
 
-    row = cursor.fetchone()
+        return data["active"]
 
-    connection.close()
+    except Exception as e:
 
-    if row is None:
+        print("Session check error:", e)
+
         return False
-
-    end_time = row[0]
-
-    if end_time == "":
-        return True
-
-    return False
-
 
 def student_name(student_id):
 
-    connection = sqlite3.connect(DATABASE)
+    try:
 
-    cursor = connection.cursor()
+        response = requests.get(
+            f"{RENDER_URL}/student_name",
+            params={
+                "student_id": student_id
+            }
+        )
 
-    cursor.execute("""
-    SELECT Name
-    FROM Students
-    WHERE StudentID=?
-    """, (student_id,))
+        data = response.json()
 
-    row = cursor.fetchone()
+        return data["name"]
 
-    connection.close()
+    except:
 
-    if row:
-        return row[0]
-
-    return "Unknown"
+        return "Unknown"
 
 
 def attendance_exists(session_id, student_id):
 
-    connection = sqlite3.connect(DATABASE)
+    try:
 
-    cursor = connection.cursor()
+        response = requests.get(
+            f"{RENDER_URL}/attendance_exists",
+            params={
+                "session_id": session_id,
+                "student_id": student_id
+            }
+        )
 
-    cursor.execute("""
-    SELECT AttendanceID
-    FROM Attendance
-    WHERE SessionID=? AND StudentID=?
-    """, (session_id, student_id))
+        data = response.json()
 
-    row = cursor.fetchone()
+        return data["exists"]
 
-    connection.close()
+    except Exception as e:
 
-    return row is not None
+        print("Attendance check error:", e)
+
+        return False
 
 
 def insert_attendance(session_id, student_id):
 
-    connection = sqlite3.connect(DATABASE)
-
-    cursor = connection.cursor()
-
     current_time = datetime.now().strftime("%I:%M:%S %p")
 
-    cursor.execute("""
-    INSERT INTO Attendance
-    (
-        SessionID,
-        StudentID,
-        TimeMarked
-    )
-    VALUES (?, ?, ?)
-    """,
-    (
-        session_id,
-        student_id,
-        current_time
-    ))
-    connection.commit()
+    try:
 
-    print("Session committed!")
-    print("Session ID:", session_id)
-    
-    cursor.execute("SELECT * FROM Sessions")
-    print(cursor.fetchall())
-    
-    connection.close()
+        response = requests.post(
+            f"{RENDER_URL}/mark_attendance",
+            json={
+                "session_id": session_id,
+                "student_id": student_id,
+                "time": current_time
+            }
+        )
+
+        print(response.json())
+
+        print(
+            f"{student_id} attendance sent"
+        )
+
+
+    except Exception as e:
+
+        print("Attendance sending error:", e)
 
 def start_attendance(session_id, room):
     camera_source = ROOM_CAMERAS[room]["source"]
