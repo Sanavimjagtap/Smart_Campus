@@ -106,7 +106,7 @@ def login():
         login_id = request.form["login_id"]
         password = request.form["password"]
 
-        coconnection = get_connection()
+        connection = get_connection()
         cursor = connection.cursor()
 
         cursor.execute(
