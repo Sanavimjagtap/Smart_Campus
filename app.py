@@ -17,7 +17,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 from flask import jsonify
-
+from db import get_connection
 app = Flask(__name__)
 app.secret_key = "smartcampus123"
 
@@ -106,22 +106,20 @@ def login():
         login_id = request.form["login_id"]
         password = request.form["password"]
 
-        connection = sqlite3.connect(DATABASE)
+        coconnection = get_connection()
         cursor = connection.cursor()
 
         cursor.execute(
-        "SELECT * FROM Teachers WHERE TeacherID=? AND Password=?",
-        (login_id, password)
-        )
+		    "SELECT * FROM Teachers WHERE TeacherID=%s AND Password=%s",
+		    (login_id, password)
+		)
 
         teacher = cursor.fetchone()
 
-
-
         cursor.execute(
-        "SELECT * FROM Students WHERE StudentID=? AND Password=?",
-        (login_id, password)
-        )
+		    "SELECT * FROM Students WHERE StudentID=%s AND Password=%s",
+		    (login_id, password)
+		)
 
         student = cursor.fetchone()
         connection.close()
@@ -138,7 +136,6 @@ def login():
             session["class"] = student[3]
             session["division"] = student[4]
 
-            connection.close()
             return redirect(url_for("student"))
         
         else:
