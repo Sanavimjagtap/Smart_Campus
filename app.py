@@ -1129,15 +1129,16 @@ def mark_attendance():
     student_id = data["student_id"]
     current_time = data["time"]
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
 
     cursor = connection.cursor()
 
     cursor.execute("""
         SELECT AttendanceID
         FROM Attendance
-        WHERE SessionID=? AND StudentID=?
-    """, (session_id, student_id))
+        WHERE SessionID=%s AND StudentID=%s
+    """,
+    (session_id, student_id))
 
     if cursor.fetchone() is None:
 
@@ -1148,7 +1149,7 @@ def mark_attendance():
                 StudentID,
                 TimeMarked
             )
-            VALUES (?, ?, ?)
+            VALUES (%s, %s, %s)
         """,
         (
             session_id,
@@ -1170,14 +1171,15 @@ def attendance_exists():
     session_id = request.args.get("session_id")
     student_id = request.args.get("student_id")
 
-    connection = sqlite3.connect(DATABASE)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("""
         SELECT AttendanceID
         FROM Attendance
-        WHERE SessionID=? AND StudentID=?
-    """, (session_id, student_id))
+        WHERE SessionID=%s AND StudentID=%s
+    """,
+    (session_id, student_id))
 
     exists = cursor.fetchone() is not None
 
