@@ -222,10 +222,10 @@ def session_page():
     minutes=int(request.form["time"])
     seconds=minutes*60  
 
-	connection = get_connection()
-	cursor = connection.cursor()
+    connection = get_connection()
+    cursor = connection.cursor()
 	
-	cursor.execute("""
+    cursor.execute("""
 	INSERT INTO Sessions
 	(
 	TeacherID,
@@ -252,12 +252,12 @@ def session_page():
 	minutes
 	))
 	
-	session_id = cursor.fetchone()[0]
+    session_id = cursor.fetchone()[0]
 	
-	session["session_id"] = session_id
+    session["session_id"] = session_id
 	
-	connection.commit()
-	connection.close()
+    connection.commit()
+    connection.close()
     #threading.Thread(
 	    #target=start_attendance,
 		#args=(session_id, room),
