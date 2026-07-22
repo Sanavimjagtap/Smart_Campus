@@ -14,10 +14,10 @@
 
 :root{
 
-    --background:#f5d7af;       /* Frappe */
-    --background2:#f5e7d3;      /* Sonora Sahde */
+    --background:#C28A3A;       /* Frappe */
+    --background2:#c9a875;      /* Sonora Sahde d9c39e  e0c58f*/
 
-    --card:#FFFFFF;
+    --card:#d9b874;
 
     --primary:#523344;         /* Italian Plum */
 
@@ -29,7 +29,7 @@
 
     --accent-light:#D19E7C;    /* Sonora Sahde */
 
-    --text:#130A0D;            /* Ebony */
+    --text:#523344;            /* Ebony */
 
     --text-light:#3F242A;      /* Tamarind */
 
@@ -1462,33 +1462,43 @@ flex:1;
 
 }
 
-.room-card{
+/* ==========================
+        OCCUPANCY PAGE
+========================== */
 
-    position:relative;
+.room-card {
+    position: relative;
+    height: 175px;
+    border-radius: 26px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 24px rgba(19,10,13,.08);
 
-    height:175px;
+    /* Flexbox layout to center content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    border-radius:26px;
+    /* Padding keeps text away from the edges */
+    padding: 20px;
+    text-align: center;
 
-    border:1px solid var(--border);
+    cursor: pointer;
+    transition: .3s;
+    overflow: hidden;
+    z-index: 1;
+}
 
-    box-shadow:
-    0 10px 24px rgba(19,10,13,.08);
+.room-card h2 {
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 700;
+}
 
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    overflow:visible;
-
-    z-index:1;
-
+.room-card p {
+    color: var(--text-light);
+    font-weight: 600;
+    margin: 0;
 }
 
 .room-card:hover{
@@ -1499,16 +1509,6 @@ flex:1;
     0 20px 38px rgba(19,10,13,.14);
 
     z-index:9999;
-
-}
-
-.room-card h2{
-
-    margin-bottom:10px;
-
-    font-size:30px;
-
-    font-weight:700;
 
 }
 
@@ -1540,14 +1540,6 @@ flex:1;
 .room-card.session p{
 
     color:white;
-
-}
-
-.room-card p{
-
-    color:var(--text-light);
-
-    font-weight:600;
 
 }
 
