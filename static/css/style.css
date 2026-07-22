@@ -112,7 +112,7 @@ input[type=submit]{
     cursor:pointer;
 
     background:var(--primary);
-    color:white;
+    color:#c9a875;
 
     padding:15px 30px;
 
@@ -133,7 +133,7 @@ input[type=submit]:hover{
 
     background:var(--accent);
 
-    color:white;
+    color:#c9a875;
 
     transform:translateY(-3px);
 
@@ -163,7 +163,7 @@ select{
 
     border:1px solid var(--border);
 
-    background:white;
+    background:var(--card);
 
     font-size:15px;
 
@@ -185,11 +185,6 @@ select:focus{
 
 }
 
-
-
-/* ===========================
-          CARDS
-=========================== */
 
 /* ===========================
           CARDS
@@ -469,7 +464,7 @@ p{
 
     background:var(--primary-dark);
 
-    color:white;
+    color:#c9a875;
 
     transform:translateX(-100%);
 
@@ -527,7 +522,7 @@ p{
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     transform:translateY(-2px);
 
@@ -585,7 +580,7 @@ p{
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     transform:translateX(6px);
 
@@ -595,7 +590,7 @@ p{
 
     background:var(--accent);
 
-    color:white;
+    color:#c9a875;
 
     box-shadow:
         0 8px 18px rgba(166,117,66,.35);
@@ -1117,7 +1112,7 @@ ATTENDANCE REPORT
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     padding:18px;
 
@@ -1307,7 +1302,7 @@ margin-top:20px;
 
 background:var(--primary);
 
-color:white;
+color:#c9a875;
 
 padding:16px;
 
@@ -1462,43 +1457,33 @@ flex:1;
 
 }
 
-/* ==========================
-        OCCUPANCY PAGE
-========================== */
+.room-card{
 
-.room-card {
-    position: relative;
-    height: 175px;
-    border-radius: 26px;
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 24px rgba(19,10,13,.08);
+    position:relative;
 
-    /* Flexbox layout to center content */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height:175px;
 
-    /* Padding keeps text away from the edges */
-    padding: 20px;
-    text-align: center;
+    border-radius:26px;
 
-    cursor: pointer;
-    transition: .3s;
-    overflow: hidden;
-    z-index: 1;
-}
+    border:1px solid var(--border);
 
-.room-card h2 {
-    margin-bottom: 8px;
-    font-size: 28px;
-    font-weight: 700;
-}
+    box-shadow:
+    0 10px 24px rgba(19,10,13,.08);
 
-.room-card p {
-    color: var(--text-light);
-    font-weight: 600;
-    margin: 0;
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    overflow:visible;
+
+    z-index:1;
+
 }
 
 .room-card:hover{
@@ -1509,6 +1494,16 @@ flex:1;
     0 20px 38px rgba(19,10,13,.14);
 
     z-index:9999;
+
+}
+
+.room-card h2{
+
+    margin-bottom:10px;
+
+    font-size:30px;
+
+    font-weight:700;
 
 }
 
@@ -1533,13 +1528,21 @@ flex:1;
         var(--primary-hover)
     );
 
-    color:white;
+    color:#c9a875;
 
 }
 
 .room-card.session p{
 
-    color:white;
+    color:#c9a875;
+
+}
+
+.room-card p{
+
+    color:var(--text-light);
+
+    font-weight:600;
 
 }
 
@@ -1619,7 +1622,7 @@ flex:1;
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     transform:
     translateY(-4px);
@@ -1733,7 +1736,7 @@ flex:1;
 
     border:2px solid transparent;
 
-    background:white;
+    background:#c9a875;
 
     border-radius:50px;
 
@@ -1768,7 +1771,7 @@ flex:1;
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     font-size:24px;
 
@@ -1835,7 +1838,7 @@ flex:1;
 
     background:var(--primary);
 
-    color:white;
+    color:#c9a875;
 
     padding:14px 18px;
 
