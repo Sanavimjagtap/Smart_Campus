@@ -14,8 +14,8 @@
 
 :root{
 
-    --background:#D4D8A2;       /* Frappe */
-    --background2:#D19E7C;      /* Sonora Sahde */
+    --background:#f5d7af;       /* Frappe */
+    --background2:#f5e7d3;      /* Sonora Sahde */
 
     --card:#FFFFFF;
 
@@ -25,7 +25,7 @@
 
     --primary-hover:#3F242A;   /* Tamarind */
 
-    --accent:#A67542;          /* Hearth Gold */
+    --accent:#C28A3A;          /* Hearth Gold */
 
     --accent-light:#D19E7C;    /* Sonora Sahde */
 
