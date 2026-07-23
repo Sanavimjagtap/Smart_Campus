@@ -258,7 +258,9 @@ def session_page():
 		#args=(session_id, room),
 	    #daemon=True
 	#).start()
-    
+    if room in classrooms:
+        classrooms[room]["occupancy"] = "session"
+
     return render_template(
         "session.html",
         active_page="session",
@@ -357,7 +359,13 @@ def end_session():
 
     connection = get_connection()
     cursor = connection.cursor()
-
+   
+    cursor.execute(
+        "SELECT Room FROM Sessions WHERE SessionID=%s",
+        (session_id,)
+    )
+    room = cursor.fetchone()[0]
+	
     cursor.execute("""
         UPDATE Sessions
         SET EndTime=%s
@@ -370,7 +378,10 @@ def end_session():
 
     connection.commit()
     connection.close()
-
+	
+    if room in classrooms:
+        classrooms[room]["occupancy"] = "available"
+		
     return redirect(url_for("teacher"))
 
 @app.route("/checkin", methods=["POST"])
