@@ -446,177 +446,161 @@ p{
 }
 
 
-/* ===========================
-          SIDEBAR
-=========================== */
+/* ===================================================
+   UNIFIED SIDEBAR SYSTEM (Desktop, Tablet, Mobile)
+   =================================================== */
 
-.sidebar{
-
-    position:fixed;
-
-    top:0;
-
-    left:0;
-
-    width:280px;
-
-    height:100vh;
-
-    background:var(--primary-dark);
-
-    color:#c9a875;
-
-    transform:translateX(-100%);
-
-    transition:transform .35s ease;
-
-    z-index:999;
-
-    padding:30px;
-
-    border-right:1px solid rgba(255,255,255,.06);
-
-    box-shadow:
-        12px 0 35px rgba(19,10,13,.35);
-
+/* Menu Hamburger Button */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--card);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    color: var(--primary);
+    cursor: pointer;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 20px rgba(19,10,13,.15);
+    transition: all .25s ease;
+    z-index: 10001; /* Sits above sidebar overlay */
 }
 
-.menu-btn{
-
-    position:fixed;
-
-    top:25px;
-
-    left:25px;
-
-    width:55px;
-    height:55px;
-
-    border-radius:14px;
-
-    background:var(--card);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:30px;
-
-    color:var(--primary);
-
-    cursor:pointer;
-
-    border:1px solid var(--border);
-
-    box-shadow:
-        0 10px 25px rgba(19,10,13,.10);
-
-    transition:all .25s ease;
-
-    z-index: 1000;
+.menu-btn:hover {
+    background: var(--primary);
+    color: #c9a875;
+    transform: translateY(-2px);
 }
 
-.menu-btn:hover{
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    transform:translateY(-2px);
-
+/* Base Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--primary-dark);
+    color: #c9a875;
+    transform: translateX(-100%); /* Hidden off-screen by default */
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+    padding: 30px 20px;
+    border-right: 1px solid rgba(255,255,255,.06);
+    box-shadow: 12px 0 35px rgba(19,10,13,.35);
+    overflow-y: auto;
 }
 
-.sidebar.active{
-
-    transform:translateX(0);
-
+/* Active State: Slides in when toggle button is clicked */
+.sidebar.active {
+    transform: translateX(0) !important;
 }
 
-.sidebar-logo{
-
-    font-size:28px;
-
-    font-weight:800;
-
-    margin-bottom:45px;
-
-    letter-spacing:.5px;
-
+.sidebar-logo {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 35px;
+    letter-spacing: .5px;
+    padding-left: 10px;
 }
 
-.sidebar nav{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.sidebar nav a{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:15px 18px;
-
-    border-radius:14px;
-
-    color:var(--background);
-
-    transition:all .25s ease;
-
-    font-weight:600;
-
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    color: var(--background);
+    transition: all .25s ease;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-.sidebar nav a:hover{
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    transform:translateX(6px);
-
+.sidebar nav a:hover {
+    background: var(--primary);
+    color: #c9a875;
+    transform: translateX(6px);
 }
 
-.sidebar nav a.active{
-
-    background:var(--accent);
-
-    color:#c9a875;
-
-    box-shadow:
-        0 8px 18px rgba(166,117,66,.35);
-
+.sidebar nav a.active {
+    background: var(--accent);
+    color: #c9a875;
+    box-shadow: 0 8px 18px rgba(166,117,66,.35);
 }
 
-.sidebar h2{
 
-    color:var(--accent);
+/* ===================================================
+   RESPONSIVE MEDIA QUERIES (Layout Adaptation)
+   =================================================== */
 
-    letter-spacing:1px;
-
-    margin-bottom:40px;
-
+/* --- 1. Laptops & Small Desktops (Up to 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .dashboard {
+        grid-template-columns: 1fr; /* Single main column when sidebar is toggled */
+    }
+    
+    .card-grid, .occupancy-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
 }
 
-.sidebar hr{
 
-    border:none;
+/* --- 2. Tablets & Smartphones (Up to 768px) --- */
+@media screen and (max-width: 768px) {
+    .dashboard {
+        display: block;
+    }
 
-    height:1px;
+    .main-content {
+        padding: 80px 18px 20px 18px !important; /* Extra top padding so menu button doesn't cover text */
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
 
-    background:rgba(255,255,255,.08);
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
 
-    margin:25px 0 35px;
+    .session-row, .login-card {
+        width: 95% !important;
+        margin: 0 auto;
+    }
+}
 
+
+/* --- 3. Extra Small Screens (Up to 480px) --- */
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 230px; /* Slightly narrower sidebar on small phones */
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    h1, h2 {
+        font-size: 1.3rem;
+    }
+
+    .room-preview {
+        width: 100%;
+        right: 0;
+        transform: translateY(100%);
+    }
+
+    .room-preview.show {
+        transform: translateY(0);
+    }
 }
 
 /* =======================
@@ -1973,147 +1957,4 @@ flex:1;
     color:var(--danger);
     font-weight:700;
 
-}
-/* ==========================
-      RESPONSIVE SIDEBAR
-========================== */
-
-@media (max-width:900px){
-
-    .sidebar{
-
-        width:230px;
-
-    }
-
-}
-
-@media (max-width:700px){
-
-    .sidebar{
-
-        width:210px;
-
-    }
-
-}
-
-@media (max-width:500px){
-
-    .sidebar{
-
-        width:190px;
-
-        padding:20px;
-
-    }
-
-    .sidebar-logo{
-
-        font-size:22px;
-
-    }
-
-    .sidebar nav a{
-
-        padding:12px 14px;
-
-        font-size:14px;
-
-    }
-
-    .sidebar nav a .material-icons{
-
-        font-size:20px;
-
-    }
-
-}
-/* ===================================================
-   RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Laptop)
-   =================================================== */
-
-/* --- 1. Laptops & Small Desktops (Up to 1024px) --- */
-@media screen and (max-width: 1024px) {
-    .dashboard {
-        grid-template-columns: 200px 1fr; /* Slimmer sidebar */
-    }
-    
-    .card-grid, .occupancy-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Flexible cards */
-    }
-}
-
-
-/* --- 2. Tablets & iPads (Up to 768px) --- */
-@media screen and (max-width: 768px) {
-    .dashboard {
-        display: block; /* Stack layout vertically */
-    }
-
-    /* Hide fixed sidebar off-screen by default */
-    .sidebar {
-        position: fixed;
-        left: -260px;
-        top: 0;
-        bottom: 0;
-        width: 240px;
-        z-index: 1000;
-        transition: left 0.3s ease;
-    }
-
-    /* Show sidebar when active class is toggled by menu button */
-    .sidebar.active {
-        left: 0;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
-    }
-
-    .main-content {
-        padding: 20px 15px;
-        margin-left: 0;
-    }
-
-    .menu-btn {
-        display: block; /* Visible hamburger menu button */
-        cursor: pointer;
-    }
-
-    /* Stack cards into single or double columns */
-    .card-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Make session/form inputs full width */
-    .session-row, .login-card {
-        width: 90% !important;
-        margin: 0 auto;
-    }
-}
-
-
-/* --- 3. Smartphones / Mobile Screens (Up to 480px) --- */
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    h1, h2 {
-        font-size: 1.4rem;
-    }
-
-    .login-card {
-        padding: 20px;
-        width: 95% !important;
-    }
-
-    /* Make preview modals/drawers take full screen on mobile */
-    .room-preview {
-        width: 100%;
-        right: 0;
-        transform: translateY(100%);
-    }
-
-    .room-preview.show {
-        transform: translateY(0);
-    }
 }
