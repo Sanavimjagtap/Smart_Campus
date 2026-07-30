@@ -450,14 +450,14 @@ p{
    UNIFIED SIDEBAR SYSTEM (Desktop, Tablet, Mobile)
    =================================================== */
 
-/* Menu Hamburger Button (Hidden on large screens by default) */
+/* Menu Hamburger Button (Hidden on Desktop, Visible on Mobile) */
 .menu-btn {
-    display: none; 
+    display: none; /* Hidden on Desktop */
     position: fixed;
     top: 20px;
     left: 20px;
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
     background: var(--card);
     justify-content: center;
@@ -477,7 +477,7 @@ p{
     transform: translateY(-2px);
 }
 
-/* Base Sidebar Styling */
+/* Base Desktop Sidebar (ALWAYS VISIBLE on Laptop/Desktop) */
 .sidebar {
     position: fixed;
     top: 0;
@@ -486,7 +486,7 @@ p{
     height: 100vh;
     background: var(--primary-dark);
     color: #c9a875;
-    transform: translateX(-100%); /* Keeps sidebar hidden off-screen */
+    transform: translateX(0); /* VISIBLE on Desktop */
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10000;
     padding: 30px 20px;
@@ -495,9 +495,10 @@ p{
     overflow-y: auto;
 }
 
-/* Active State: Slides in when toggle button is clicked */
-.sidebar.active {
-    transform: translateX(0) !important;
+/* Adjust Desktop Main Content so it doesn't get overlapped by sidebar */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
 }
 
 .sidebar-logo {
@@ -540,39 +541,36 @@ p{
 
 
 /* ===================================================
-   RESPONSIVE MEDIA QUERIES (Layout Adaptation)
+   RESPONSIVE MEDIA QUERIES (Mobile & Tablet Switch)
    =================================================== */
 
-/* --- 1. Laptops & Small Desktops (Up to 1024px) --- */
-@media screen and (max-width: 1024px) {
-    .dashboard {
-        grid-template-columns: 1fr;
-    }
-    
-    .dashboard-grid, .card-grid, .occupancy-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-}
-
-
-/* --- 2. Tablets & Smartphones (Up to 768px) --- */
+/* --- Mobile & Tablets (768px and below) --- */
 @media screen and (max-width: 768px) {
-    /* Show hamburger menu button on phones and tablets */
+
+    /* Show hamburger menu button on mobile */
     .menu-btn {
         display: flex !important;
     }
 
-    .dashboard {
-        display: block;
+    /* Hide sidebar off-screen by default on mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 250px !important;
     }
 
+    /* Slide sidebar in when 'active' class is toggled by JS */
+    .sidebar.active {
+        transform: translateX(0) !important;
+    }
+
+    /* Reset main content margin so it takes full screen width */
     .main-content {
-        padding: 85px 18px 20px 18px !important; /* Prevents menu button overlapping page titles */
         margin-left: 0 !important;
+        padding: 85px 18px 20px 18px !important; /* Pushes content down under hamburger button */
         width: 100% !important;
     }
 
-    /* Force dashboard cards into 1 single responsive column */
+    /* Force grid cards to single column on mobile */
     .dashboard-grid, .card-grid {
         grid-template-columns: 1fr !important;
         gap: 18px;
@@ -585,10 +583,10 @@ p{
 }
 
 
-/* --- 3. Extra Small Screens (Up to 480px) --- */
+/* --- Small Phones (480px and below) --- */
 @media screen and (max-width: 480px) {
     .sidebar {
-        width: 230px !important; /* Slide-out drawer width for small phones */
+        width: 220px !important;
     }
 
     body {
@@ -597,16 +595,6 @@ p{
 
     h1, h2 {
         font-size: 1.3rem;
-    }
-
-    .room-preview {
-        width: 100%;
-        right: 0;
-        transform: translateY(100%);
-    }
-
-    .room-preview.show {
-        transform: translateY(0);
     }
 }
 /* =======================
