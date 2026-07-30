@@ -96,9 +96,6 @@ a{
 
 }
 
-/* ===========================
-        BUTTONS
-=========================== */
 
 /* ===========================
         BUTTONS
@@ -451,24 +448,9 @@ p{
    =================================================== */
 
 /* Menu Hamburger Button (Hidden on Desktop, Visible on Mobile) */
+/* Hide hamburger menu button on desktop */
 .menu-btn {
-    display: none; /* Hidden on Desktop */
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--card);
-    justify-content: center;
-    align-items: center;
-    font-size: 26px;
-    color: var(--primary);
-    cursor: pointer;
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 20px rgba(19,10,13,.15);
-    transition: all .25s ease;
-    z-index: 10001; /* Sits above sidebar overlay */
+    display: none !important;
 }
 
 .menu-btn:hover {
@@ -478,6 +460,7 @@ p{
 }
 
 /* Base Desktop Sidebar (ALWAYS VISIBLE on Laptop/Desktop) */
+/* Always show sidebar on desktop */
 .sidebar {
     position: fixed;
     top: 0;
@@ -486,21 +469,21 @@ p{
     height: 100vh;
     background: var(--primary-dark);
     color: #c9a875;
-    transform: translateX(0); /* VISIBLE on Desktop */
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(0) !important; /* Visible on desktop */
+    transition: transform 0.3s ease;
     z-index: 10000;
     padding: 30px 20px;
-    border-right: 1px solid rgba(255,255,255,.06);
     box-shadow: 12px 0 35px rgba(19,10,13,.35);
     overflow-y: auto;
 }
 
 /* Adjust Desktop Main Content so it doesn't get overlapped by sidebar */
+/* Offset main content so it sits NEXT to the sidebar */
 .main-content {
-    margin-left: 260px;
+    margin-left: 260px !important;
     padding: 30px;
+    width: calc(100% - 260px);
 }
-
 .sidebar-logo {
     font-size: 26px;
     font-weight: 800;
@@ -541,40 +524,55 @@ p{
 
 
 /* ===================================================
-   RESPONSIVE MEDIA QUERIES (Mobile & Tablet Switch)
+   MOBILE & TABLET (Screens 768px and smaller)
    =================================================== */
 
-/* --- Mobile & Tablets (768px and below) --- */
 @media screen and (max-width: 768px) {
 
     /* Show hamburger menu button on mobile */
     .menu-btn {
         display: flex !important;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        background: var(--card);
+        color: var(--primary);
+        font-size: 24px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 10001; /* Sits on top of everything */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
     /* Hide sidebar off-screen by default on mobile */
     .sidebar {
-        transform: translateX(-100%);
+        transform: translateX(-100%) !important;
         width: 250px !important;
     }
 
-    /* Slide sidebar in when 'active' class is toggled by JS */
+    /* Slide sidebar in when toggle button is clicked */
     .sidebar.active {
         transform: translateX(0) !important;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
     }
 
-    /* Reset main content margin so it takes full screen width */
+/* Expand main content to full screen width on mobile */
     .main-content {
         margin-left: 0 !important;
-        padding: 85px 18px 20px 18px !important; /* Pushes content down under hamburger button */
         width: 100% !important;
+        padding: 75px 15px 20px 15px !important; /* Top space for menu button */
     }
 
-    /* Force grid cards to single column on mobile */
+/* Stack cards into 1 column on phone */
     .dashboard-grid, .card-grid {
         grid-template-columns: 1fr !important;
-        gap: 18px;
+        gap: 16px;
     }
+}
 
     .session-row, .login-card {
         width: 95% !important;
