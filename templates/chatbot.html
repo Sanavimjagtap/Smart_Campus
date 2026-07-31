@@ -127,7 +127,11 @@ placeholder="Ask anything about Fergusson College...">
 </main>
       
 <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
-
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
 </body>
 
 </html>
