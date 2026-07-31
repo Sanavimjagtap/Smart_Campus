@@ -95,8 +95,6 @@ a{
     color:inherit;
 
 }
-
-
 /* ===========================
         BUTTONS
 =========================== */
@@ -320,159 +318,179 @@ p{
 
 }
 
+/* ===========================
+          SIDEBAR
+=========================== */
 
-/* ===================================================
-   UNIFIED SIDEBAR SYSTEM (Desktop, Tablet, Mobile)
-   =================================================== */
+.sidebar{
 
-/* Menu Hamburger Button (Hidden on Desktop, Visible on Mobile) */
-/* Hide hamburger menu button on desktop */
-.menu-btn {
-    display: none !important;
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:280px;
+
+    height:100vh;
+
+    background:var(--primary-dark);
+
+    color:#c9a875;
+
+    transform:translateX(-100%);
+
+    transition:transform .35s ease;
+
+    z-index:999;
+
+    padding:30px;
+
+    border-right:1px solid rgba(255,255,255,.06);
+
+    box-shadow:
+        12px 0 35px rgba(19,10,13,.35);
+
 }
 
-.menu-btn:hover {
-    background: var(--primary);
-    color: #c9a875;
-    transform: translateY(-2px);
+.menu-btn{
+
+    position:fixed;
+
+    top:25px;
+
+    left:25px;
+
+    width:55px;
+    height:55px;
+
+    border-radius:14px;
+
+    background:var(--card);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+    color:var(--primary);
+
+    cursor:pointer;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 10px 25px rgba(19,10,13,.10);
+
+    transition:all .25s ease;
+
+    z-index: 1000;
 }
 
-/* Base Desktop Sidebar (ALWAYS VISIBLE on Laptop/Desktop) */
-/* Always show sidebar on desktop */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px;
-    height: 100vh;
-    background: var(--primary-dark);
-    color: #c9a875;
-    transform: translateX(0) !important; /* Visible on desktop */
-    transition: transform 0.3s ease;
-    z-index: 10000;
-    padding: 30px 20px;
-    box-shadow: 12px 0 35px rgba(19,10,13,.35);
-    overflow-y: auto;
+.menu-btn:hover{
+
+    background:var(--primary);
+
+    color:#c9a875;
+
+    transform:translateY(-2px);
+
 }
 
-/* Adjust Desktop Main Content so it doesn't get overlapped by sidebar */
-/* Offset main content so it sits NEXT to the sidebar */
-.main-content {
-    margin-left: 260px !important;
-    padding: 30px;
-    width: calc(100% - 260px);
-}
-.sidebar-logo {
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 35px;
-    letter-spacing: .5px;
-    padding-left: 10px;
+.sidebar.active{
+
+    transform:translateX(0);
+
 }
 
-.sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.sidebar-logo{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    margin-bottom:45px;
+
+    letter-spacing:.5px;
+
 }
 
-.sidebar nav a {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 13px 16px;
-    border-radius: 12px;
-    color: var(--background);
-    transition: all .25s ease;
-    font-weight: 600;
-    text-decoration: none;
+.sidebar nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
 }
 
-.sidebar nav a:hover {
-    background: var(--primary);
-    color: #c9a875;
-    transform: translateX(6px);
+.sidebar nav a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    color:var(--background);
+
+    transition:all .25s ease;
+
+    font-weight:600;
+
 }
 
-.sidebar nav a.active {
-    background: var(--accent);
-    color: #c9a875;
-    box-shadow: 0 8px 18px rgba(166,117,66,.35);
+.sidebar nav a:hover{
+
+    background:var(--primary);
+
+    color:#c9a875;
+
+    transform:translateX(6px);
+
 }
 
+.sidebar nav a.active{
 
-/* ===================================================
-   MOBILE & TABLET (Screens 768px and smaller)
-   =================================================== */
+    background:var(--accent);
 
-@media screen and (max-width: 768px) {
+    color:#c9a875;
 
-    /* Show hamburger menu button on mobile */
-    .menu-btn {
-        display: flex !important;
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        width: 45px;
-        height: 45px;
-        border-radius: 10px;
-        background: var(--card);
-        color: var(--primary);
-        font-size: 24px;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        z-index: 10001; /* Sits on top of everything */
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
+    box-shadow:
+        0 8px 18px rgba(166,117,66,.35);
 
-    /* Hide sidebar off-screen by default on mobile */
-    .sidebar {
-        transform: translateX(-100%) !important;
-        width: 250px !important;
-    }
-
-    /* Slide sidebar in when toggle button is clicked */
-    .sidebar.active {
-        transform: translateX(0) !important;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
-    }
-
-/* Expand main content to full screen width on mobile */
-    .main-content {
-        margin-left: 0 !important;
-        width: 100% !important;
-        padding: 75px 15px 20px 15px !important; /* Top space for menu button */
-    }
-
-/* Stack cards into 1 column on phone */
-    .dashboard-grid, .card-grid {
-        grid-template-columns: 1fr !important;
-        gap: 16px;
-    }
 }
 
-    .session-row, .login-card {
-        width: 95% !important;
-        margin: 0 auto;
-    }
+.sidebar h2{
+
+    color:var(--accent);
+
+    letter-spacing:1px;
+
+    margin-bottom:40px;
+
 }
 
+.sidebar hr{
 
-/* --- Small Phones (480px and below) --- */
-@media screen and (max-width: 480px) {
-    .sidebar {
-        width: 220px !important;
-    }
+    border:none;
 
-    body {
-        font-size: 14px;
-    }
+    height:1px;
 
-    h1, h2 {
-        font-size: 1.3rem;
-    }
+    background:rgba(255,255,255,.08);
+
+    margin:25px 0 35px;
+
 }
+
 /* =======================
         Main
 ======================= */
@@ -546,1250 +564,3 @@ p{
 }
 
 
-/* =======================
-        Dashboard Grid
-======================= */
-
-.dashboard-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr
-        1fr
-        1fr;
-
-    gap:30px;
-
-}
-
-
-/* Cards */
-
-.dashboard-grid .card{
-
-    min-height:320px;
-
-    border-radius:28px;
-
-}
-
-
-/* Card Heading */
-
-.dashboard-grid h3{
-
-    color:var(--primary-dark);
-
-    margin-bottom:10px;
-
-}
-
-
-/* Buttons */
-
-.dashboard-grid button{
-
-    width:100%;
-
-}
-
-
-/* Status */
-
-.dashboard-grid p{
-
-    margin-bottom:12px;
-
-}
-
-
-/* Hover Animation */
-
-.dashboard-grid .card:hover{
-
-    transform:translateY(-8px);
-
-}
-
-
-
-/* ===========================
-SESSION SETUP
-=========================== */
-
-.page{
-
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding:60px;
-
-}
-
-.session-card{
-
-    width:480px;
-
-    background:var(--card);
-
-    border-radius:24px;
-
-    padding:45px;
-
-    border:1px solid var(--border);
-
-    box-shadow:
-        0 18px 40px rgba(19,10,13,.10);
-
-    transition:all .3s ease;
-
-}
-
-.session-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 25px 50px rgba(19,10,13,.14);
-
-}
-
-.session-card h2{
-
-    color:var(--primary);
-
-    margin-bottom:15px;
-
-    font-size:34px;
-
-}
-
-.line{
-
-    height:3px;
-
-    width:100%;
-
-    background:var(--border);
-
-    margin-bottom:35px;
-
-    border-radius:10px;
-
-}
-
-.session-row{
-
-    margin-bottom:28px;
-
-}
-
-.session-row label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    color:var(--primary-dark);
-
-    font-weight:600;
-
-    font-size:15px;
-
-}
-
-.session-row select{
-
-    width:100%;
-
-    padding:16px;
-
-    border-radius:14px;
-
-    border:2px solid var(--border);
-
-    background:var(--card);
-
-    color:var(--text);
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:all .25s ease;
-
-}
-
-.session-row select:hover{
-
-    border-color:var(--primary);
-
-}
-
-.session-row select:focus{
-
-    border-color:var(--primary);
-
-    box-shadow:
-        0 0 0 4px rgba(82,51,68,.15);
-
-}
-
-.start-btn{
-
-    width:100%;
-
-    margin-top:20px;
-
-    padding:18px;
-
-    font-size:18px;
-
-    border-radius:18px;
-
-}
-
-.session-row select option{
-
-    color:var(--text);
-
-    background:var(--card);
-
-}
-/*==========================
-        SESSION PAGE
-===========================*/
-
-.session-wrapper{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:35px;
-
-    margin-top:40px;
-
-}
-
-.session-card{
-
-background:rgba(255,255,255,.82);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.45);
-
-padding:35px;
-
-border-radius:28px;
-
-box-shadow:0 20px 45px rgba(0,0,0,.08);
-
-}
-
-.session-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 22px 45px rgba(19,10,13,.12);
-
-}
-
-.session-card h2{
-
-    margin-bottom:25px;
-
-    color:var(--primary);
-
-    font-size:26px;
-
-}
-
-.session-card label{
-
-    display:block;
-
-    margin-top:18px;
-
-    margin-bottom:8px;
-
-    font-weight:600;
-
-    color:var(--text);
-
-}
-
-.session-card button{
-
-    width:100%;
-
-    margin-top:30px;
-
-}
-
-.detail{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin:18px 0;
-
-    padding:12px 0;
-
-    font-size:16px;
-
-    border-bottom:1px solid var(--border);
-
-}
-
-.detail:last-child{
-
-    border-bottom:none;
-
-}
-
-.detail span{
-
-    color:var(--text-light);
-
-}
-
-.detail strong{
-
-color:var(--success);
-
-font-weight:700;
-
-}
-.session-card hr{
-
-    margin:25px 0;
-
-    border:none;
-
-    border-top:1px solid var(--border);
-
-}
-
-.timer{
-
-font-size:48px;
-
-font-weight:700;
-
-text-align:center;
-
-color:var(--accent);
-
-margin:25px 0;
-
-letter-spacing:2px;
-
-}
-
-.end-btn{
-
-background:var(--danger);
-
-}
-
-.end-btn:hover{
-
-background:#b54b54;
-
-}
-
-/*=============================
-ATTENDANCE REPORT
-==============================*/
-
-.attendance-table{
-
-    width:100%;
-    border-collapse:collapse;
-    margin-top:30px;
-
-    background:var(--card);
-
-    border-radius:24px;
-    overflow:hidden;
-
-    border:1px solid var(--border);
-
-    box-shadow:
-        0 14px 32px rgba(19,10,13,.08);
-
-}
-
-.attendance-table th{
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    padding:18px;
-
-    text-align:left;
-
-    font-size:16px;
-
-    font-weight:700;
-
-}
-
-.attendance-table td{
-
-    padding:18px;
-
-    border-bottom:1px solid var(--border);
-
-    color:var(--text);
-
-}
-
-.attendance-table tr:last-child td{
-
-    border-bottom:none;
-
-}
-
-.attendance-table tr:hover{
-
-    background:var(--background2);
-
-}
-
-.present,
-.absent{
-
-    display:inline-block;
-
-    padding:6px 14px;
-
-    border-radius:999px;
-
-    font-size:14px;
-
-}
-
-.present{
-
-    background:rgba(76,175,80,.15);
-    color:var(--success);
-
-}
-
-.absent{
-
-    background:rgba(217,83,79,.15);
-    color:var(--danger);
-
-}
-
-/* ===========================
-ATTENDANCE REPORTS PAGE
-===========================*/
-
-.reports-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-
-gap:30px;
-
-margin-top:40px;
-
-}
-
-.report-card{
-
-background:var(--card);
-
-padding:32px;
-
-border-radius:28px;
-
-border:1px solid var(--border);
-
-box-shadow:
-0 12px 28px rgba(19,10,13,.08);
-
-transition:.25s;
-
-}
-
-.report-card:hover{
-
-transform:translateY(-4px);
-
-box-shadow:
-0 20px 40px rgba(19,10,13,.12);
-
-}
-
-.report-card h3{
-
-color:var(--primary);
-
-font-size:22px;
-
-margin-bottom:18px;
-
-}
-
-.report-card p{
-
-margin:10px 0;
-
-}
-
-.report-card button{
-
-margin-top:25px;
-
-width:100%;
-
-}
-
-/*=========================
-Attendance Report
-=========================*/
-
-.summary-grid{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:25px;
-
-margin-bottom:35px;
-
-}
-
-.summary-card{
-
-background:var(--card);
-
-padding:30px;
-
-border-radius:24px;
-
-text-align:center;
-
-border:1px solid var(--border);
-
-box-shadow:
-0 10px 24px rgba(19,10,13,.08);
-
-}
-
-.summary-card h2{
-
-font-size:42px;
-
-font-weight:700;
-
-color:var(--primary);
-
-}
-
-.summary-card p{
-
-margin-top:8px;
-
-}
-
-.attendance-table{
-
-width:100%;
-
-border-collapse:collapse;
-
-margin-top:20px;
-
-}
-
-.attendance-table th{
-
-background:var(--primary);
-
-color:#c9a875;
-
-padding:16px;
-
-text-align:left;
-
-}
-
-.attendance-table td{
-
-padding:16px;
-
-border-bottom:1px solid var(--border);
-
-}
-
-.attendance-table tr:hover{
-
-background:var(--background);
-
-}
-
-.present-badge{
-
-background:#EAF6EE;
-
-color:var(--success);
-
-border:1px solid #C9E6D4;
-
-padding:8px 16px;
-
-font-weight:600;
-
-}
-
-.absent-badge{
-
-background:#FBEAEA;
-
-color:var(--danger);
-
-border:1px solid #E8C3C6;
-
-border-radius:999px;
-
-padding:8px 16px;
-
-font-weight:600;
-
-}
-
-.export-buttons{
-
-display:flex;
-
-gap:18px;
-
-margin-top:35px;
-
-}
-
-.export-buttons button{
-
-flex:1;
-
-}
-/* ==========================
-        OCCUPANCY PAGE
-========================== */
-
-.occupancy-page{
-
-    margin-top:25px;
-
-}
-
-.occupancy-title{
-
-    margin-bottom:35px;
-
-}
-
-.occupancy-title h1{
-
-    color:var(--primary-dark);
-
-}
-
-.legend{
-
-    display:flex;
-
-    gap:30px;
-
-    margin-bottom:40px;
-
-}
-
-.legend-item{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    font-weight:600;
-
-}
-
-.legend-color{
-
-    width:18px;
-
-    height:18px;
-
-    border-radius:50%;
-
-}
-
-.legend-color.available{
-
-    background:#E8F4EC;
-    border:2px solid #CFE6D7;
-
-}
-
-.legend-color.occupied{
-
-    background:var(--background);
-    border:2px solid var(--border);
-
-}
-
-.legend-color.session{
-
-    background:var(--primary);
-
-}
-
-.occupancy-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-
-    gap:28px;
-
-    overflow:visible;
-
-    position:relative;
-
-}
-
-/* ==========================
-        OCCUPANCY PAGE
-========================== */
-
-.room-card {
-    position: relative;
-    height: 175px;
-    border-radius: 26px;
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 24px rgba(19,10,13,.08);
-
-    /* Flexbox layout to center content */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    /* Padding keeps text away from the edges */
-    padding: 20px;
-    text-align: center;
-
-    cursor: pointer;
-    transition: .3s;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.room-card h2 {
-    margin-bottom: 8px;
-    font-size: 28px;
-    font-weight: 700;
-}
-
-.room-card p {
-    color: var(--text-light);
-    font-weight: 600;
-    margin: 0;
-}
-
-.room-card:hover{
-
-    transform:translateY(-5px);
-
-    box-shadow:
-    0 20px 38px rgba(19,10,13,.14);
-
-    z-index:9999;
-
-}
-
-
-.room-card.available{
-
-    background:#F7FBF8;
-
-}
-.room-card.occupied{
-
-    background:var(--background);
-
-    border:2px solid var(--border);
-
-}
-
-.room-card.session{
-
-    background:linear-gradient(
-        135deg,
-        var(--primary),
-        var(--primary-hover)
-    );
-
-    color:#c9a875;
-
-}
-
-.room-card.session p{
-
-    color:#c9a875;
-
-}
-
-/* ======================================================
-   SMART CAMPUS AI
-====================================================== */
-
-.ai-header{
-
-    text-align:center;
-    margin-top:25px;
-    margin-bottom:35px;
-
-}
-
-.ai-header h1{
-
-    font-size:54px;
-    color:var(--primary-dark);
-    font-weight:700;
-    margin-bottom:12px;
-
-}
-
-.ai-header p{
-
-    font-size:19px;
-    color:var(--text-light);
-
-}
-
-
-
-/* ======================================================
-   SUGGESTION CHIPS
-====================================================== */
-
-.suggestions{
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-
-    gap:18px;
-
-    margin-bottom:40px;
-
-}
-
-.suggestions button{
-
-    border:1px solid var(--border);
-
-    background:var(--card);
-
-    color:var(--primary);
-
-    padding:15px 26px;
-
-    border-radius:30px;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    box-shadow:
-    0 8px 18px rgba(19,10,13,.05);
-
-}
-
-.suggestions button:hover{
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    transform:
-    translateY(-4px);
-
-    box-shadow:
-    0 16px 28px rgba(82,51,68,.25);
-
-}
-
-
-
-/* ======================================================
-   CHAT PANEL
-====================================================== */
-
-.chat-box{
-
-    width:min(900px,95%);
-
-    margin:auto;
-
-    background:rgba(255,253,252,.88);
-
-    backdrop-filter:blur(18px);
-
-    border-radius:28px;
-
-    border:1px solid rgba(255,255,255,.6);
-
-    box-shadow:
-    0 18px 42px rgba(19,10,13,.08);
-
-    overflow:hidden;
-
-    animation:fadeUp .8s;
-
-}
-
-
-
-/* ======================================================
-   CHAT AREA
-====================================================== */
-
-.chat-messages{
-
-    min-height:430px;
-
-    padding:35px;
-
-    display:flex;
-
-    align-items:flex-start;
-
-}
-
-.bot-message{
-
-    max-width:430px;
-
-    background:var(--background);
-
-    padding:28px;
-
-    border-radius:24px;
-
-    color:var(--text);
-
-    box-shadow:
-    0 8px 18px rgba(19,10,13,.06);
-
-}
-
-.bot-message h3{
-
-    margin-bottom:18px;
-
-    font-size:22px;
-
-}
-
-.bot-message p{
-
-    line-height:1.8;
-
-    font-size:17px;
-
-}
-
-
-
-/* ======================================================
-   INPUT
-====================================================== */
-
-.chat-input{
-
-    display:flex;
-
-    gap:15px;
-
-    padding:28px;
-
-    border-top:1px solid var(--border);
-
-}
-
-.chat-input input{
-
-    flex:1;
-
-    border:2px solid transparent;
-
-    background:#c9a875;
-
-    border-radius:50px;
-
-    padding:18px 24px;
-
-    font-size:17px;
-
-    outline:none;
-
-    transition:.3s;
-
-}
-
-.chat-input input:focus{
-
-    border-color:var(--primary);
-
-    box-shadow:
-    0 0 0 5px rgba(82,51,68,.10);
-
-}
-
-.chat-input button{
-
-    width:64px;
-
-    height:64px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    font-size:24px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    box-shadow:
-
-    0 12px 22px rgba(82,51,68,.22);
-
-}
-
-.chat-input button:hover{
-
-    transform:scale(1.08);
-
-    background:var(--primary-hover);
-
-}
-
-
-
-/* ======================================================
-   ANIMATION
-====================================================== */
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-        transform:translateY(0);
-
-    }
-
-}
-.messages{
-
-    height:480px;
-
-    overflow-y:auto;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:18px;
-
-    padding:10px;
-
-}
-
-.user-message{
-
-    align-self:flex-end;
-
-    background:var(--primary);
-
-    color:#c9a875;
-
-    padding:14px 18px;
-
-    border-radius:22px 22px 6px 22px;
-
-    max-width:75%;
-
-    box-shadow:
-    0 8px 18px rgba(82,51,68,.22);
-
-}
-
-.bot-message{
-
-    align-self:flex-start;
-
-    background:var(--card);
-
-    color:var(--text);
-
-    padding:16px 18px;
-
-    border-radius:22px 22px 22px 6px;
-
-    max-width:75%;
-
-    box-shadow:
-    0 8px 18px rgba(19,10,13,.05);
-
-}
-
-/* ==========================
-      FLOATING ROOM PREVIEW
-========================== */
-
-.room-preview{
-
-    position:fixed;
-
-    right:40px;
-
-    top:180px;
-
-    width:290px;
-
-    background:rgba(255,253,252,.92);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid var(--border);
-
-    border-radius:24px;
-
-    padding:26px;
-
-    box-shadow:
-    0 18px 42px rgba(19,10,13,.12);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transform:translateX(35px);
-
-    transition:.3s ease;
-
-    z-index:99999;
-
-}
-
-.room-preview.show{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:translateX(0);
-
-}
-
-.room-preview h2{
-
-    color:var(--primary);
-
-    margin-bottom:18px;
-
-    font-size:24px;
-
-    font-weight:700;
-
-}
-
-.preview-item{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:12px 0;
-
-    border-bottom:1px solid var(--border);
-
-    font-size:15px;
-
-}
-
-.preview-item:last-child{
-
-    border-bottom:none;
-
-}
-
-.preview-item span{
-
-    font-weight:700;
-
-    color:var(--primary);
-
-}
-
-.preview-value-safe{
-
-    color:var(--success);
-    font-weight:600;
-
-}
-
-.preview-value-warning{
-
-    color:var(--warning);
-    font-weight:600;
-
-}
-
-.preview-value-danger{
-
-    color:var(--danger);
-    font-weight:700;
-
-}
