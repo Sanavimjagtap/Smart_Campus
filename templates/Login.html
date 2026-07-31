@@ -32,48 +32,50 @@
 
 <div class="background"></div>
 
-<div class="login-card">
+<div class="login-container">
 
-    <img src="{{ url_for('static', filename='images/logo_fc.jpg') }}"
-         class="logo">
+    <div class="login-card">
 
-    <h1>Fergusson College</h1>
+        <img src="{{ url_for('static', filename='images/logo_fc.jpg') }}"
+             class="logo">
 
-    <p class="campus">
-        Smart Campus
-    </p>
+        <h1>Fergusson College</h1>
 
-    <p class="subtitle">
-        AI Powered Campus Management
-    </p>
+        <p class="campus">
+            Smart Campus
+        </p>
 
-    <form method="POST">
+        <p class="subtitle">
+            AI Powered Campus Management
+        </p>
 
-        <label>Login ID</label>
+        <form method="POST">
 
-        <input
-            type="text"
-            name="login_id"
-            placeholder="Enter Login ID"
-            required
-        >
+            <label>Login ID</label>
 
-        <label>Password</label>
+            <input
+                type="text"
+                name="login_id"
+                placeholder="Enter Login ID"
+                required
+            >
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Enter Password"
-            required
-        >
+            <label>Password</label>
 
-        <button type="submit">
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                required
+            >
 
-            Sign In
+            <button type="submit">
+                Sign In
+            </button>
 
-        </button>
+        </form>
 
-    </form>
+    </div>
 
 </div>
 
