@@ -11,7 +11,7 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
 
     },
 
@@ -19,7 +19,7 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
 
     },
 
@@ -27,14 +27,14 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
     },
 
     "AC-4":{
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
 
     },
 
@@ -42,7 +42,7 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
 
     },
 
@@ -50,7 +50,7 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
+        "source":"http://10.117.141.179:8080/video"
 
     },
 
@@ -58,8 +58,7 @@ ROOM_CAMERAS = {
 
         "type":"ip",
 
-        "source":"http://10.172.59.40:8080/video"
-
+        "source":"http://10.117.141.179:8080/video"
     },
 }
 
