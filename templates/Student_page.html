@@ -1,17 +1,160 @@
-<html>
-<head>
-<title>Student Page </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body bgcolor= "#967bb6">
-<a href="C:\Users\jagta\Smart Campus Prototype\templates\Student_page1.html"><img src="menu.jpg" width="30" height="30"></img></a>
-<center>
-<img src="logo_fc.jpg" width="60" height="60"> </img>
-<font size= "60"> <b> FERGUSSON COLLEGE </b></FONT><br><br>
-<hr>
-<font size ="20"> Welcome, {{ student_name }}! </font>
-</center>
-<font size="5"> Today's timetable </font>
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+   {% include "components/sidebarstud.html" %}
+
+<main class="main-content">
+
+{% include "components/header.html" %}
+
+
+        <!-- Greeting -->
+
+        <section class="greeting">
+
+            <h1>
+                Good Morning, 
+                {{ student_name }}
+
+            </h1>
+
+        </section>
+
+
+        <!-- Dashboard Grid -->
+
+        <section class="dashboard-grid">
+
+            <!-- Actions -->
+
+            <div class="card">
+
+                <h3>
+
+                    Quick Actions
+
+                </h3>
+
+                <br>
+
+                <form action="/checkin" method="POST">
+
+                    <button type="submit">
+
+                        Check In
+
+                    </button>
+
+                </form>
+
+                <br>
+
+                <form action="/checkout" method="POST">
+
+                    <button type="submit">
+
+                        Check Out
+
+                    </button>
+
+                </form>
+
+                <br>
+
+                <a href="/session_setup">
+
+                    <button>
+
+                        Start Session
+
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Timetable -->
+
+            <div class="card">
+
+                <h3>
+
+                    Today's Timetable
+
+                </h3>
+
+                <br>
+
+                <p>
+
+                    AC-2
+
+                </p>
+
+                <p>
+
+                    12th Science
+
+                </p>
+
+                <p>
+
+                    Physics
+
+                </p>
+
+            </div>
+
+
+            <!-- Status -->
+
+<div class="card">
+
+    <h3>
+        Status
+    </h3>
+
+    <br>
+
+</div>
+        </section>
+
+    </main>
+
+</div>
+</div>
+<script>
+
+function toggleSidebar(){
+
+    document.getElementById("sidebar").classList.toggle("active");
+
+}
+</script>
 </body>
-</html> 
+
+</html>\
