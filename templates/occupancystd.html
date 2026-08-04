@@ -12,8 +12,9 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
+    
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/occupancy.css') }}">
+    href="{{ url_for('static', filename='css/occupancy.css') }}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -89,12 +90,15 @@ data-fire="{{ room.fire }}">
     <p class="room-status">
 
         {% if room.occupancy=="available" %}
+
             Available
 
         {% elif room.occupancy=="occupied" %}
+
             Occupied
 
-        {% else room.occupancy=="session" %}
+        {% elif room.occupancy=="session" %}
+
             Session Running
 
         {% endif %}
@@ -138,6 +142,8 @@ data-fire="{{ room.fire }}">
 
 </div>
 </main>
+
+
 <script>
 async function updateOccupancy(){
 
@@ -279,6 +285,11 @@ setInterval(()=>{
     }
 
 },1000);
+</script>
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
 </script>
 </body>
 
