@@ -962,7 +962,7 @@ def export_pdf(session_id):
         download_name=f"Attendance_Session_{session_id}.pdf"
     )
 
-@app.route("/occupancy")
+@app.route("/occupancystd")
 def occupancy_page():
     print("PAGE PID:", os.getpid())
     print(classrooms)
@@ -977,7 +977,7 @@ def occupancy_page():
         room_list.append(room)
 
     return render_template(
-        "occupancy.html",
+        "occupancystd.html",
         classrooms=room_list,
         active_page="occupancy"
     )
@@ -989,6 +989,14 @@ def chatbot():
         "chatbot.html",
         active_page="chatbot"
     )
+
+@app.route("/chatbotstd")
+def chatbot():
+
+    return render_template(
+        "studchatbot.html",
+
+	)
 
 @app.route("/ask_chatbot", methods=["POST"])
 def ask_chatbot():
