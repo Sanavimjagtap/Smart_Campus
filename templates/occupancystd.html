@@ -88,18 +88,18 @@ data-fire="{{ room.fire }}">
     <h2>{{ room.room }}</h2>
 
     <p class="room-status">
+        {% if room.occupancy=="session" %}
 
-        {% if room.occupancy=="available" %}
-
-            Available
+            Session Running
 
         {% elif room.occupancy=="occupied" %}
 
             Occupied
 
-        {% elif room.occupancy=="session" %}
+        {% elif room.occupancy=="available" %}
 
-            Session Running
+            Available
+        
 
         {% endif %}
 
