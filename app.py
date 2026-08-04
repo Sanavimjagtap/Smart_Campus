@@ -1,5 +1,7 @@
 import os
 import re
+import cv2
+import time
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime
 import sqlite3
@@ -961,9 +963,28 @@ def export_pdf(session_id):
         as_attachment=True,
         download_name=f"Attendance_Session_{session_id}.pdf"
     )
+@app.route("/occupancy")
+def occupancy_page():
+    print("PAGE PID:", os.getpid())
+    print(classrooms)
+    room_list = []
+
+    for room_name, data in classrooms.items():
+
+        room = data.copy()
+
+        room["room"] = room_name
+
+        room_list.append(room)
+
+    return render_template(
+        "occupancy.html",
+        classrooms=room_list,
+        active_page="occupancy"
+    )
 
 @app.route("/occupancystd")
-def occupancy_page():
+def occupancy_std():
     print("PAGE PID:", os.getpid())
     print(classrooms)
     room_list = []
@@ -991,10 +1012,11 @@ def chatbot():
     )
 
 @app.route("/chatbotstd")
-def chatbot():
+def chatbotstd():
 
     return render_template(
         "studchatbot.html",
+        active_page="chatbot"
 
     )
 
@@ -1262,4 +1284,4 @@ def attendance_exists():
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
-    
+   
