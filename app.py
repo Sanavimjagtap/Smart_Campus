@@ -996,7 +996,7 @@ def chatbot():
     return render_template(
         "studchatbot.html",
 
-	)
+    )
 
 @app.route("/ask_chatbot", methods=["POST"])
 def ask_chatbot():
