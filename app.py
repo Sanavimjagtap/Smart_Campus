@@ -1160,22 +1160,56 @@ def update_occupancy():
 
     data = request.json
 
-    print("Received:", data)
-
     if not data or "room" not in data:
         return "Invalid Data", 400
 
     room = data["room"]
 
-    if room in classrooms:
+    if room not in classrooms:
+        return "Unknown Room", 404
 
-        classrooms[room]["occupancy"] = data["occupancy"]
-        classrooms[room]["temperature"] = data["temperature"]
-        classrooms[room]["air"] = data["air"]
-        classrooms[room]["lights"] = data["lights"]
-        classrooms[room]["window"] = data["window"]
-        classrooms[room]["fire"] = data["fire"]
-        classrooms[room]["door"] = data["door"]
+    # -----------------------------
+    # Update sensor values
+    # -----------------------------
+    classrooms[room]["temperature"] = data["temperature"]
+    classrooms[room]["air"] = data["air"]
+    classrooms[room]["lights"] = data["lights"]
+    classrooms[room]["window"] = data["window"]
+    classrooms[room]["fire"] = data["fire"]
+    classrooms[room]["door"] = data["door"]
+
+    motion = data["motion"]
+
+    # -----------------------------
+    # Check if a session is running
+    # -----------------------------
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT SessionID
+        FROM Sessions
+        WHERE Room = %s
+        AND EndTime = ''
+        ORDER BY SessionID DESC
+        LIMIT 1
+    """, (room,))
+
+    running = cursor.fetchone()
+
+    connection.close()
+
+    # -----------------------------
+    # Decide occupancy
+    # -----------------------------
+    if running:
+        classrooms[room]["occupancy"] = "session"
+
+    elif motion:
+        classrooms[room]["occupancy"] = "occupied"
+
+    else:
+        classrooms[room]["occupancy"] = "available"
 
     return "Updated"
 
