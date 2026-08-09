@@ -1200,18 +1200,18 @@ def update_occupancy():
     connection.close()
 
     # -----------------------------
-    # Decide occupancy
-    # -----------------------------
-    if running:
-        classrooms[room]["occupancy"] = "session"
+	# Decide occupancy
+	# -----------------------------
+	if running:
+    	classrooms[room]["occupancy"] = "session"
 
-    elif motion:
-        classrooms[room]["occupancy"] = "occupied"
-
-    else:
-        classrooms[room]["occupancy"] = "available"
-
-    return "Updated"
+	elif data["lights"] == "ON":
+	    classrooms[room]["occupancy"] = "occupied"
+	
+	else:
+	    classrooms[room]["occupancy"] = "available"
+	
+	    return "Updated"
 
 @app.route("/occupancy_status")
 def occupancy_status():
