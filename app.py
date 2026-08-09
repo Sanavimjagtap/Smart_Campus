@@ -1171,6 +1171,7 @@ def update_occupancy():
     # -----------------------------
     # Update sensor values
     # -----------------------------
+
     classrooms[room]["temperature"] = data["temperature"]
     classrooms[room]["air"] = data["air"]
     classrooms[room]["lights"] = data["lights"]
@@ -1178,11 +1179,10 @@ def update_occupancy():
     classrooms[room]["fire"] = data["fire"]
     classrooms[room]["door"] = data["door"]
 
-    motion = data["motion"]
-
     # -----------------------------
     # Check if a session is running
     # -----------------------------
+
     connection = get_connection()
     cursor = connection.cursor()
 
@@ -1197,21 +1197,23 @@ def update_occupancy():
 
     running = cursor.fetchone()
 
+    cursor.close()
     connection.close()
 
     # -----------------------------
-	# Decide occupancy
-	# -----------------------------
-	if running:
-    	classrooms[room]["occupancy"] = "session"
+    # Decide occupancy
+    # -----------------------------
 
-	elif data["lights"] == "ON":
-	    classrooms[room]["occupancy"] = "occupied"
-	
-	else:
-	    classrooms[room]["occupancy"] = "available"
-	
-	    return "Updated"
+    if running:
+        classrooms[room]["occupancy"] = "session"
+
+    elif data["lights"] == "ON":
+        classrooms[room]["occupancy"] = "occupied"
+
+    else:
+        classrooms[room]["occupancy"] = "available"
+
+    return "Updated"
 
 @app.route("/occupancy_status")
 def occupancy_status():
