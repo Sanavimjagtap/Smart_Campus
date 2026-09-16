@@ -94,6 +94,22 @@ classrooms = {
 
 }
 
+@app.route("/test-db")
+def test_db():
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+
+        cursor.close()
+        connection.close()
+
+        return f"Database connected! Result: {result[0]}"
+
+    except Exception as e:
+        return f"Database error: {e}", 500
 
 @app.route("/", methods=["GET", "POST"])
 def login():
